@@ -1,58 +1,55 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from 'react';
 import {StatusBar} from 'expo-status-bar';
-import {StyleSheet, Text, View} from 'react-native';
 import Button from '../components/Button';
-import {Killa} from "../components/Images";
+import {MainView, InfoBlock, Playground, Footer} from '../components/Placements';
+import {fillPlayground} from '../tools/playground';
+import {difficultyCeilsMap} from '../tools/constants'
 
-export const Main = () => {
-  const [labelText, setlabelText] = useState('');
+const EMPTY = -1
 
-  return (
-          <View style={styles.container}>
-            <View style={styles.grid}>
-              <Text style={styles.text}>{labelText}</Text>
-            </View>
-            <Killa />
-            <View style={styles.buttonGrid}>
-              <Button
-                onPress={() => setlabelText('Пидр')}
-                title={'Выше'}
-              />
-              <Button
-                onPress={() => setlabelText('Гнида')}
-                title={'Ниже'}
-              />
-            </View>
-            <StatusBar style="auto"/>
-          </View>
-          );
+export const Game = () => {
+    const [labelText, setLabelText] = useState('');
+    const [difficult, _] = useState(difficultyCeilsMap.easy);
+    const [currentCard, setCurrentCard] = useState(EMPTY);
+
+    // Playground permanent state
+    const [field, charCoords] = useRef(fillPlayground(difficult)).current;
+    // Needs to keep cards opened
+    const guessedPositions = useRef({});
+    const previousOpenedCard = useRef(EMPTY);
+
+    const setLabel = (text: string) => {
+        setLabelText(text);
+        setTimeout(() => setLabelText(''), 1000)
+    };
+
+    const setCardAndSavePrevious = (ceil: number) => {
+        if (previousOpenedCard.current !== currentCard) {
+            previousOpenedCard.current = currentCard;
+        }
+        setCurrentCard(ceil);
+    };
+
+    const createField = () => {
+        const charImages: React.FC<any>[] = []
+        for (const [ceilStr, char] of Object.entries(field)) {
+            const ceil = Number(ceilStr)
+            charImages[ceil] = char.getImageComponent(ceil, () => setCardAndSavePrevious(ceil))
+        }
+        return charImages;
+    };
+
+
+    return (
+        <MainView>
+            <StatusBar style='auto'/>
+            <InfoBlock labelText={labelText} />
+            <Playground>
+                {createField()}
+            </Playground>
+            <Footer>
+                <Button title={'?'} onPress={() => setLabel('На тему сел?')}/>
+            </Footer>
+        </MainView>
+    );
 }
-
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    flex: 1,
-    backgroundColor: 'rgb(34,41,45)',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  text: {
-    fontSize: 48,
-    color: '#fff',
-    fontFamily: 'Monospace'
-  },
-  grid: {
-    flex: 1,
-    alignItems: 'center',
-    alignContent: 'space-between',
-    flexDirection: "row"
-  },
-  buttonGrid: {
-    flex: 1,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    flexDirection: "row"
-  }
-});

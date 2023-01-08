@@ -1,5 +1,5 @@
-import { Main } from "./views/Main";
+import { Game } from "./views/Main";
 
-const App = () => <Main />;
+const App = () => <Game />;
 
 export default App;

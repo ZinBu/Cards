@@ -17,6 +17,7 @@ const Button: React.FC<Props> = ({title, onPress}) => (
 
 const styles = StyleSheet.create({
     buttonContainer: {
+        margin: 5,
         elevation: 8,
         backgroundColor: "rgb(46,116,76)",
         borderRadius: 8,
@@ -24,11 +25,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12
     },
     buttonText: {
-        fontSize: 18,
+        fontSize: 12,
         color: "#fff",
         fontWeight: "bold",
         alignSelf: "center",
-        textTransform: "uppercase"
+        textTransform: "uppercase",
+        fontFamily: 'Monospace'
     }
 });
 
