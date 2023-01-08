@@ -1,51 +1,50 @@
 import {Image, ImageRequireSource, StyleSheet, TouchableHighlight} from 'react-native';
 import {Character} from '../tools/interfaces';
 
-const CharacterImage: React.FC<{ source: ImageRequireSource, onPress: Function }> = ({source, onPress}) => {
-    return <TouchableHighlight
-        onPress={onPress}
-        >
-        <Image style={styles.char} source={source} />
-    </TouchableHighlight
->;
-};
-
 const charPath = {
     killa: require(`../assets/images/killa.png`),
     kot: require(`../assets/images/kot.png`),
     oshparenni: require(`../assets/images/oshp.png`),
     rama: require(`../assets/images/rama.png`),
+    boomer: require(`../assets/images/boomer.jpg`),
+};
+
+const CharacterImage: React.FC<{ source: ImageRequireSource, onPress: Function, hide: boolean}> = ({source, onPress, hide}) => {
+    return <TouchableHighlight
+                onPress={onPress}
+                >
+                {!hide ? <Image style={styles.char} source={source} /> : <Image style={styles.char} source={charPath.boomer} />}
+        </TouchableHighlight>;
 };
 
 const killa: Character = {
     name: 'killa',
     onSuccessSounds: [],
     onFailSounds: [],
-    getImageComponent: (key: number, onPress: Function) => <CharacterImage source={charPath.killa} key={key} onPress={onPress} />
+    getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={charPath.killa} key={key} onPress={onPress} hide={hide} />
 }
 
 const kot: Character = {
     name: 'kot',
     onSuccessSounds: [],
     onFailSounds: [],
-    getImageComponent: (key: number, onPress: Function) => <CharacterImage source={charPath.kot} key={key} onPress={onPress} />
+    getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={charPath.kot} key={key} onPress={onPress} hide={hide} />
 }
 
 const oshparenni: Character = {
     name: 'oshparenni',
     onSuccessSounds: [],
     onFailSounds: [],
-    getImageComponent: (key: number, onPress: Function) => <CharacterImage source={charPath.oshparenni} key={key} onPress={onPress} />
+    getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={charPath.oshparenni} key={key} onPress={onPress} hide={hide} />
 }
 
 const rama: Character = {
     name: 'rama',
     onSuccessSounds: [],
     onFailSounds: [],
-    getImageComponent: (key: number, onPress: Function) => <CharacterImage source={charPath.rama} key={key} onPress={onPress} />
+    getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={charPath.rama} key={key} onPress={onPress} hide={hide} />
 }
 
-// todo EmptyImage
 
 export const characters: Character[] = [
     killa,

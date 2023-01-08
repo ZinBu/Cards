@@ -13,9 +13,9 @@ export const Game = () => {
     const [currentCard, setCurrentCard] = useState(EMPTY);
 
     // Playground permanent state
-    const [field, charCoords] = useRef(fillPlayground(difficult)).current;
+    const playfield = useRef(fillPlayground(difficult));
     // Needs to keep cards opened
-    const guessedPositions = useRef({});
+    const guessedCeils = useRef({});
     const previousOpenedCard = useRef(EMPTY);
 
     const setLabel = (text: string) => {
@@ -23,22 +23,65 @@ export const Game = () => {
         setTimeout(() => setLabelText(''), 1000)
     };
 
+    const clearCurrentCardPointers = () => {
+        previousOpenedCard.current = EMPTY;
+        setCurrentCard(EMPTY);
+    };
+
+    const resetCardsProgress = () => {
+        guessedCeils.current = {};
+        clearCurrentCardPointers();
+    };
+
+    const restartGame = () => {
+        resetCardsProgress();
+        playfield.current = fillPlayground(difficult);
+        setLabel('На тему сел?');
+    };
+
+    const acceptRightChoose = (ceil: number) => {
+        guessedCeils.current[ceil] = true
+        guessedCeils.current[previousOpenedCard.current] = true
+        clearCurrentCardPointers();
+        setLabel('Ну ты коммерс!');
+    };
+
+    const acceptWrongChoose = (ceil: number) => {
+        resetCardsProgress();
+        setLabel('Ты че буровишь, гандон?!!');
+    };
+
     const setCardAndSavePrevious = (ceil: number) => {
         if (previousOpenedCard.current !== currentCard) {
             previousOpenedCard.current = currentCard;
+        }
+        if (previousOpenedCard.current !== EMPTY) {
+            const previousCard = playfield.current[previousOpenedCard.current];
+            const currentCard = playfield.current[ceil];
+            if (previousOpenedCard.current === ceil) {
+                return;
+            }
+            if (previousCard.name === currentCard.name) {
+                return acceptRightChoose(ceil);
+            } else {
+                return acceptWrongChoose(ceil);
+            }
         }
         setCurrentCard(ceil);
     };
 
     const createField = () => {
         const charImages: React.FC<any>[] = []
-        for (const [ceilStr, char] of Object.entries(field)) {
-            const ceil = Number(ceilStr)
-            charImages[ceil] = char.getImageComponent(ceil, () => setCardAndSavePrevious(ceil))
+        for (const [ceilStr, char] of Object.entries(playfield.current)) {
+            const ceil = Number(ceilStr);
+            if (ceil in guessedCeils.current) {
+                charImages[ceil] = char.getImageComponent(ceil, () => null, false);
+            } else {
+                charImages[ceil] = char.getImageComponent(ceil, () => setCardAndSavePrevious(ceil), true);
+            }
         }
         return charImages;
     };
-
 
     return (
         <MainView>
@@ -48,7 +91,7 @@ export const Game = () => {
                 {createField()}
             </Playground>
             <Footer>
-                <Button title={'?'} onPress={() => setLabel('На тему сел?')}/>
+                <Button title={'↻'} onPress={restartGame}/>
             </Footer>
         </MainView>
     );
