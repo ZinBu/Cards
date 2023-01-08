@@ -1,9 +1,9 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {StatusBar} from 'expo-status-bar';
 import Button from '../components/Button';
 import {MainView, InfoBlock, Playground, Footer} from '../components/Placements';
 import {fillPlayground} from '../tools/playground';
-import {difficultyCeilsMap} from '../tools/constants'
+import {difficultyCeilsMap, cardsShowingTime, labelShowingTime} from '../tools/constants'
 
 const EMPTY = -1
 
@@ -11,6 +11,7 @@ export const Game = () => {
     const [labelText, setLabelText] = useState('');
     const [difficult, _] = useState(difficultyCeilsMap.easy);
     const [currentCard, setCurrentCard] = useState(EMPTY);
+    const [showAllCards, setShowAllCards] = useState(true);
 
     // Playground permanent state
     const playfield = useRef(fillPlayground(difficult));
@@ -18,9 +19,16 @@ export const Game = () => {
     const guessedCeils = useRef({});
     const previousOpenedCard = useRef(EMPTY);
 
+    useEffect(
+        () => {
+            setTimeout(() => setShowAllCards(false), cardsShowingTime);
+        },
+        [showAllCards],
+    );
+
     const setLabel = (text: string) => {
         setLabelText(text);
-        setTimeout(() => setLabelText(''), 1000)
+        setTimeout(() => setLabelText(''), labelShowingTime)
     };
 
     const clearCurrentCardPointers = () => {
@@ -36,6 +44,7 @@ export const Game = () => {
     const restartGame = () => {
         resetCardsProgress();
         playfield.current = fillPlayground(difficult);
+        setShowAllCards(true);
         setLabel('На тему сел?');
     };
 
@@ -74,7 +83,7 @@ export const Game = () => {
         const charImages: React.FC<any>[] = []
         for (const [ceilStr, char] of Object.entries(playfield.current)) {
             const ceil = Number(ceilStr);
-            if (ceil in guessedCeils.current) {
+            if (showAllCards || ceil in guessedCeils.current) {
                 charImages[ceil] = char.getImageComponent(ceil, () => null, false);
             } else {
                 charImages[ceil] = char.getImageComponent(ceil, () => setCardAndSavePrevious(ceil), true);

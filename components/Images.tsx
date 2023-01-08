@@ -61,6 +61,6 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         borderStyle: 'solid',
         border: 3,
-        backgroundColor: 'rgba(62, 84, 116, 64)'
+        backgroundColor: 'rgba(62, 84, 116, 64)',
     }
 });

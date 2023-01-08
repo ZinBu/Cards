@@ -5,3 +5,7 @@ export const difficultyCeilsMap = {
 };
 
 export const sameCardCount = 2;
+
+export const cardsShowingTime = 2500;
+
+export const labelShowingTime = 1500;
