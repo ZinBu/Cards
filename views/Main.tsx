@@ -1,9 +1,10 @@
 import React, {useRef, useState, useEffect} from 'react';
 import {StatusBar} from 'expo-status-bar';
+import {Audio} from 'expo-av';
 import Button from '../components/Button';
 import {MainView, InfoBlock, Playground, Footer} from '../components/Placements';
 import {fillPlayground} from '../tools/playground';
-import {difficultyCeilsMap, cardsShowingTime, labelShowingTime} from '../tools/constants'
+import {difficultyCeilsMap, cardsShowingTime, labelShowingTime} from '../tools/constants';
 
 const EMPTY = -1
 
@@ -12,12 +13,37 @@ export const Game = () => {
     const [difficult, _] = useState(difficultyCeilsMap.easy);
     const [currentCard, setCurrentCard] = useState(EMPTY);
     const [showAllCards, setShowAllCards] = useState(true);
+    const [sound, setSound] = useState<Audio.Sound>();
 
     // Playground permanent state
     const playfield = useRef(fillPlayground(difficult));
     // Needs to keep cards opened
     const guessedCeils = useRef({});
     const previousOpenedCard = useRef(EMPTY);
+
+     const playSound = async () => {
+            const { sound } = await Audio.Sound.createAsync( require('../assets/sounds/main.mp3'));
+            setSound(sound);
+            await sound.playAsync();
+    };
+
+    // Start play the main theme
+    useEffect(
+        () => {
+            playSound();
+        },
+        []
+    )
+    // Prevent memory leak
+    useEffect(() => {
+    return sound
+          ? () => {
+              sound.unloadAsync();
+            }
+          : undefined;
+        },
+        [sound]
+    );
 
     useEffect(
         () => {
@@ -49,13 +75,15 @@ export const Game = () => {
     };
 
     const acceptRightChoose = (ceil: number) => {
+        // @ts-ignore
         guessedCeils.current[ceil] = true
+        // @ts-ignore
         guessedCeils.current[previousOpenedCard.current] = true
         clearCurrentCardPointers();
         setLabel('Ну ты коммерс!');
     };
 
-    const acceptWrongChoose = (ceil: number) => {
+    const acceptWrongChoose = () => {
         resetCardsProgress();
         setLabel('Ты че буровишь, гандон?!!');
     };
@@ -73,7 +101,7 @@ export const Game = () => {
             if (previousCard.name === currentCard.name) {
                 return acceptRightChoose(ceil);
             } else {
-                return acceptWrongChoose(ceil);
+                return acceptWrongChoose();
             }
         }
         setCurrentCard(ceil);
