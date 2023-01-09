@@ -8,6 +8,17 @@ import {difficultyCeilsMap, cardsShowingTime, labelShowingTime} from '../tools/c
 
 const EMPTY = -1
 
+export const GameMenu = () => {
+    const [startGamePressed, setStartGamePressed] = useState(false);
+
+    return (
+        <MainView>
+            <StatusBar style='auto'/>
+            {startGamePressed ? <Game /> : <Button title={'Старт'} onPress={() => setStartGamePressed(true)}/>}
+        </MainView>
+        );
+}
+
 export const Game = () => {
     const [labelText, setLabelText] = useState('');
     const [difficult, _] = useState(difficultyCeilsMap.easy);
@@ -112,8 +123,10 @@ export const Game = () => {
         for (const [ceilStr, char] of Object.entries(playfield.current)) {
             const ceil = Number(ceilStr);
             if (showAllCards || ceil in guessedCeils.current) {
+                // @ts-ignore
                 charImages[ceil] = char.getImageComponent(ceil, () => null, false);
             } else {
+                // @ts-ignore
                 charImages[ceil] = char.getImageComponent(ceil, () => setCardAndSavePrevious(ceil), true);
             }
         }
@@ -121,7 +134,7 @@ export const Game = () => {
     };
 
     return (
-        <MainView>
+        <>
             <StatusBar style='auto'/>
             <InfoBlock labelText={labelText} />
             <Playground>
@@ -130,6 +143,6 @@ export const Game = () => {
             <Footer>
                 <Button title={'↻'} onPress={restartGame}/>
             </Footer>
-        </MainView>
+        </>
     );
 }
