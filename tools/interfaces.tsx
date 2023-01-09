@@ -1,7 +1,6 @@
 export interface Character {
     name: string,
-    onSuccessSounds: Array<any>,
-    onFailSounds: Array<any>,
+    onSuccessSounds: any[],
+    onFailSounds: any[],
     getImageComponent: React.FC<any>,
-
 }

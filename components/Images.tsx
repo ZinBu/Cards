@@ -11,9 +11,10 @@ const charPath = {
 
 const CharacterImage: React.FC<{ source: ImageRequireSource, onPress: Function, hide: boolean}> = ({source, onPress, hide}) => {
     return <TouchableHighlight
-                onPress={onPress}
-                >
-                {!hide ? <Image style={styles.char} source={source} /> : <Image style={styles.char} source={charPath.boomer} />}
+        // @ts-ignore
+        onPress={onPress}
+        >
+            {!hide ? <Image style={styles.char} source={source} /> : <Image style={styles.char} source={charPath.boomer} />}
         </TouchableHighlight>;
 };
 
@@ -21,6 +22,7 @@ const killa: Character = {
     name: 'killa',
     onSuccessSounds: [],
     onFailSounds: [],
+    // @ts-ignore
     getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={charPath.killa} key={key} onPress={onPress} hide={hide} />
 }
 
@@ -28,6 +30,7 @@ const kot: Character = {
     name: 'kot',
     onSuccessSounds: [],
     onFailSounds: [],
+    // @ts-ignore
     getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={charPath.kot} key={key} onPress={onPress} hide={hide} />
 }
 
@@ -35,6 +38,7 @@ const oshparenni: Character = {
     name: 'oshparenni',
     onSuccessSounds: [],
     onFailSounds: [],
+    // @ts-ignore
     getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={charPath.oshparenni} key={key} onPress={onPress} hide={hide} />
 }
 
@@ -42,6 +46,7 @@ const rama: Character = {
     name: 'rama',
     onSuccessSounds: [],
     onFailSounds: [],
+    // @ts-ignore
     getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={charPath.rama} key={key} onPress={onPress} hide={hide} />
 }
 
