@@ -1,10 +1,11 @@
 import React, {useRef, useState, useEffect} from 'react';
 import {StatusBar} from 'expo-status-bar';
-import {Audio} from 'expo-av';
+import {Audio, AVPlaybackSource} from 'expo-av';
+import {Character} from './interfaces';
 import Button from '../components/Button';
 import {MainView, InfoBlock, Playground, Footer} from '../components/Placements';
-import {fillPlayground} from '../tools/playground';
-import {difficultyCeilsMap, cardsShowingTime, labelShowingTime} from '../tools/constants';
+import {fillPlayground, getRandomOnSuccaesSound} from '../tools/playground';
+import {difficultyCeilsMap, cardsShowingTime, labelShowingTime, sounds} from '../tools/constants';
 
 const EMPTY = -1
 
@@ -27,33 +28,34 @@ export const Game = () => {
     const [sound, setSound] = useState<Audio.Sound>();
 
     // Playground permanent state
-    const playfield = useRef(fillPlayground(difficult));
+    const playfield: { [key: number]: Character } = useRef(fillPlayground(difficult));
     // Needs to keep cards opened
     const guessedCeils = useRef({});
     const previousOpenedCard = useRef(EMPTY);
 
-     const playSound = async () => {
-            const { sound } = await Audio.Sound.createAsync( require('../assets/sounds/main.mp3'));
-            setSound(sound);
-            await sound.playAsync();
+     const playSound = async (soundSource: AVPlaybackSource, volume: number = 1.0) => {
+        const { sound } = await Audio.Sound.createAsync(soundSource);
+        await sound.setVolumeAsync(volume);
+        setSound(sound);
+        await sound.playAsync();
     };
 
     // Start play the main theme
     useEffect(
         () => {
-            playSound();
+            playSound(sounds.MAIN, 0.1);
         },
         []
     )
     // Prevent memory leak
     useEffect(() => {
-    return sound
-          ? () => {
-              sound.unloadAsync();
-            }
-          : undefined;
-        },
-        [sound]
+        return sound
+              ? () => {
+                  sound.unloadAsync();
+                }
+              : undefined;
+            },
+            [sound]
     );
 
     useEffect(
@@ -86,11 +88,13 @@ export const Game = () => {
     };
 
     const acceptRightChoose = (ceil: number) => {
+        const char: Character = playfield.current[ceil];
         // @ts-ignore
-        guessedCeils.current[ceil] = true
+        guessedCeils.current[ceil] = true;
         // @ts-ignore
-        guessedCeils.current[previousOpenedCard.current] = true
+        guessedCeils.current[previousOpenedCard.current] = true;
         clearCurrentCardPointers();
+        playSound(getRandomOnSuccaesSound(char.onSuccessSounds));
         setLabel('Ну ты коммерс!');
     };
 

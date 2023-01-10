@@ -1,53 +1,56 @@
 import {Image, ImageRequireSource, StyleSheet, TouchableHighlight} from 'react-native';
+import {images, sounds} from '../tools/constants';
 import {Character} from '../tools/interfaces';
 
-const charPath = {
-    killa: require(`../assets/images/killa.png`),
-    kot: require(`../assets/images/kot.png`),
-    oshparenni: require(`../assets/images/oshp.png`),
-    rama: require(`../assets/images/rama.png`),
-    boomer: require(`../assets/images/boomer.jpg`),
-};
 
-const CharacterImage: React.FC<{ source: ImageRequireSource, onPress: Function, hide: boolean}> = ({source, onPress, hide}) => {
+const CharacterImage: React.FC<{ source: ImageRequireSource, onPress: () => void, hide: boolean}> = ({source, onPress, hide}) => {
     return <TouchableHighlight
-        // @ts-ignore
         onPress={onPress}
         >
-            {!hide ? <Image style={styles.char} source={source} /> : <Image style={styles.char} source={charPath.boomer} />}
+            {!hide ? <Image style={styles.char} source={source} /> : <Image style={styles.char} source={images.BOOMER} />}
         </TouchableHighlight>;
 };
 
 const killa: Character = {
     name: 'killa',
-    onSuccessSounds: [],
+    onSuccessSounds: [
+            sounds.PODARKOV,
+            sounds.PODGON
+        ],
     onFailSounds: [],
     // @ts-ignore
-    getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={charPath.killa} key={key} onPress={onPress} hide={hide} />
+    getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={images.KILLA} key={key} onPress={onPress} hide={hide} />
 }
 
 const kot: Character = {
     name: 'kot',
-    onSuccessSounds: [],
+    onSuccessSounds: [
+        sounds.KANITEL,
+    ],
     onFailSounds: [],
     // @ts-ignore
-    getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={charPath.kot} key={key} onPress={onPress} hide={hide} />
+    getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={images.KOT} key={key} onPress={onPress} hide={hide} />
 }
 
 const oshparenni: Character = {
     name: 'oshparenni',
-    onSuccessSounds: [],
+    onSuccessSounds: [
+        sounds.TERPILA,
+        sounds.MERC,
+    ],
     onFailSounds: [],
     // @ts-ignore
-    getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={charPath.oshparenni} key={key} onPress={onPress} hide={hide} />
+    getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={images.OSHPARENNI} key={key} onPress={onPress} hide={hide} />
 }
 
 const rama: Character = {
     name: 'rama',
-    onSuccessSounds: [],
+    onSuccessSounds: [
+        sounds.NEMI
+    ],
     onFailSounds: [],
     // @ts-ignore
-    getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={charPath.rama} key={key} onPress={onPress} hide={hide} />
+    getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={images.RAMA} key={key} onPress={onPress} hide={hide} />
 }
 
 
