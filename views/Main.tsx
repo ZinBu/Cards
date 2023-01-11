@@ -150,7 +150,7 @@ export const Game: React.FC<{difficulty: number}> = ({difficulty}) => {
         const charImages: React.FC<any>[] = []
         for (const [ceilStr, char] of Object.entries(playfield.current)) {
             const ceil = Number(ceilStr);
-            if (showAllCards || ceil in guessedCeils.current) {
+            if (showAllCards || ceil in guessedCeils.current || ceil === currentCard) {
                 // @ts-ignore
                 charImages[ceil] = char.getImageComponent(ceil, () => null, false);
             } else {
