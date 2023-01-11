@@ -33,6 +33,7 @@ export const Game: React.FC<{difficulty: number}> = ({difficulty}) => {
     const [showAllCards, setShowAllCards] = useState(true);
     const [sound, setSound] = useState<Audio.Sound>();
     const [mainSound, setMainSound] = useState<Audio.Sound>();
+    const [greatingsSound, setGreatingsSound] = useState<Audio.Sound>();
 
     // Playground permanent state
     const playfield: MutableRefObject<{ [key: number]: Character }> = useRef(fillPlayground(difficulty));
@@ -58,7 +59,13 @@ export const Game: React.FC<{difficulty: number}> = ({difficulty}) => {
     // Start play the main theme
     useEffect(
         () => {
-            playSound(sounds.MAIN, 0.1, true, setMainSound);
+            playSound(sounds.MAIN, 0.2, true, setMainSound);
+        },
+        []
+    )
+    useEffect(
+        () => {
+            playSound(sounds.ZAPRAVKA, 0.5, false, setGreatingsSound);
         },
         []
     )
@@ -80,6 +87,15 @@ export const Game: React.FC<{difficulty: number}> = ({difficulty}) => {
               : undefined;
         },
           [mainSound]
+      );
+    useEffect(() => {
+        return greatingsSound
+              ? () => {
+            greatingsSound.unloadAsync();
+        }
+              : undefined;
+        },
+          [greatingsSound]
       );
 
     useEffect(

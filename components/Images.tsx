@@ -15,7 +15,8 @@ const killa: Character = {
     name: 'killa',
     onSuccessSounds: [
             sounds.PODARKOV,
-            sounds.PODGON
+            sounds.PODGON,
+            sounds.VLUDI,
         ],
     onFailSounds: [],
     // @ts-ignore
@@ -26,6 +27,8 @@ const kot: Character = {
     name: 'kot',
     onSuccessSounds: [
         sounds.KANITEL,
+        sounds.ALE,
+        sounds.BUHOI,
     ],
     onFailSounds: [],
     // @ts-ignore
@@ -46,11 +49,35 @@ const oshparenni: Character = {
 const rama: Character = {
     name: 'rama',
     onSuccessSounds: [
-        sounds.NEMI
+        sounds.NEMI,
+        sounds.MOLOKA,
     ],
     onFailSounds: [],
     // @ts-ignore
     getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={images.RAMA} key={key} onPress={onPress} hide={hide} />
+}
+
+const sobachiha: Character = {
+    name: 'sobachiha',
+    onSuccessSounds: [
+        sounds.POUBIVAUT,
+        sounds.KATAFALKA,
+    ],
+    onFailSounds: [],
+    // @ts-ignore
+    getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={images.SOBACHIHA} key={key} onPress={onPress} hide={hide} />
+}
+
+
+const eralash: Character = {
+    name: 'eralash',
+    onSuccessSounds: [
+        sounds.SMOTRI,
+        sounds.MICHISH,
+    ],
+    onFailSounds: [],
+    // @ts-ignore
+    getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={images.ERALASH} key={key} onPress={onPress} hide={hide} />
 }
 
 
@@ -58,7 +85,9 @@ export const characters: Character[] = [
     killa,
     kot,
     oshparenni,
-    rama
+    rama,
+    sobachiha,
+    eralash,
 ]
 
 const styles = StyleSheet.create({
