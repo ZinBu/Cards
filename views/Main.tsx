@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useRef, useState, useEffect, MutableRefObject} from 'react';
 import {StatusBar} from 'expo-status-bar';
 import {Audio, AVPlaybackSource} from 'expo-av';
 import {Character} from './interfaces';
@@ -10,40 +10,55 @@ import {difficultyCeilsMap, cardsShowingTime, labelShowingTime, sounds} from '..
 const EMPTY = -1
 
 export const GameMenu = () => {
-    const [startGamePressed, setStartGamePressed] = useState(false);
+    const [difficulty, setDifficulty] = useState(null);
 
     return (
         <MainView>
             <StatusBar style='auto'/>
-            {startGamePressed ? <Game /> : <Button title={'Старт'} onPress={() => setStartGamePressed(true)}/>}
+            {
+                difficulty
+                ? <Game difficulty={difficulty} />
+                : <>
+                    <Button title={'Легко'} onPress={() => setDifficulty(difficultyCeilsMap.easy)}/ >
+                    <Button title={'Сложно'} onPress={() => setDifficulty(difficultyCeilsMap.hard)}/>
+                </>
+            }
         </MainView>
         );
 }
 
-export const Game = () => {
+export const Game: React.FC<{difficulty: number}> = ({difficulty}) => {
     const [labelText, setLabelText] = useState('');
-    const [difficult, _] = useState(difficultyCeilsMap.easy);
     const [currentCard, setCurrentCard] = useState(EMPTY);
     const [showAllCards, setShowAllCards] = useState(true);
     const [sound, setSound] = useState<Audio.Sound>();
+    const [mainSound, setMainSound] = useState<Audio.Sound>();
 
     // Playground permanent state
-    const playfield: { [key: number]: Character } = useRef(fillPlayground(difficult));
+    const playfield: MutableRefObject<{ [key: number]: Character }> = useRef(fillPlayground(difficulty));
     // Needs to keep cards opened
     const guessedCeils = useRef({});
     const previousOpenedCard = useRef(EMPTY);
 
-     const playSound = async (soundSource: AVPlaybackSource, volume: number = 1.0) => {
+    const playSound = async (
+            soundSource: AVPlaybackSource,
+            volume: number = 1.0,
+            loop: boolean = false,
+            setSoundState: React.Dispatch<any> = setSound
+            ) => {
         const { sound } = await Audio.Sound.createAsync(soundSource);
         await sound.setVolumeAsync(volume);
-        setSound(sound);
+        if (loop) {
+            sound.setIsLoopingAsync(true)
+        }
+        setSoundState(sound);
         await sound.playAsync();
     };
 
     // Start play the main theme
     useEffect(
         () => {
-            playSound(sounds.MAIN, 0.1);
+            playSound(sounds.MAIN, 0.1, true, setMainSound);
         },
         []
     )
@@ -57,6 +72,15 @@ export const Game = () => {
             },
             [sound]
     );
+    useEffect(() => {
+        return mainSound
+              ? () => {
+            mainSound.unloadAsync();
+        }
+              : undefined;
+        },
+          [mainSound]
+      );
 
     useEffect(
         () => {
@@ -82,7 +106,7 @@ export const Game = () => {
 
     const restartGame = () => {
         resetCardsProgress();
-        playfield.current = fillPlayground(difficult);
+        playfield.current = fillPlayground(difficulty);
         setShowAllCards(true);
         setLabel('На тему сел?');
     };

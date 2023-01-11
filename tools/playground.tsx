@@ -11,7 +11,7 @@ const getRandomElem = (array: any[]) => array[Math.floor(Math.random() * array.l
 export const fillPlayground = (difficulty: number): { [key: number]: Character } => {
     const field: { [key: number]: Character } = {}
     let shuffledCeils: number[] = shuffle(Array.from(Array(difficulty).keys()))
-    characters.forEach(
+    shuffle(characters).forEach(
         (character) => {
             if (!shuffledCeils.length) {
                 return;

@@ -1,7 +1,6 @@
 export const difficultyCeilsMap = {
-    easy: 8,
-    medium: 10,
-    hard: 14
+    easy: 6,
+    hard: 12
 };
 
 export const sameCardCount = 2;
