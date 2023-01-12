@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, ImageRequireSource, StyleSheet, TouchableHighlight, Animated} from 'react-native';
+import {ImageRequireSource, StyleSheet, TouchableHighlight, Animated} from 'react-native';
 import {images, sounds, animationSpeed} from '../tools/constants';
 import {Character} from '../tools/interfaces';
 
@@ -13,6 +13,7 @@ const CharacterImage: React.FC<{ source: ImageRequireSource, onPress: () => void
                 {
                     toValue: 1,
                     duration: animationSpeed,
+                    useNativeDriver: true
                 }
                 ).start();
         }, [fadeAnim])
