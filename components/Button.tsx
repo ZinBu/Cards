@@ -4,7 +4,7 @@ import {TouchableOpacity, StyleSheet, Text} from 'react-native';
 type Props = {
     title: string,
     onPress: () => void;
-    width: number;
+    width?: number;
 };
 
 const Button: React.FC<Props> = ({title, onPress, width = 150}) => (

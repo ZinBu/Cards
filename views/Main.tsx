@@ -10,24 +10,31 @@ import {difficultyCeilsMap, cardsShowingTime, labelShowingTime, sounds} from '..
 const EMPTY = -1
 
 export const GameMenu = () => {
-    const [difficulty, setDifficulty] = useState<number | null>(null);
+    const [difficulty, _setDifficulty] = useState<number | null>(null);
+    const [keepCardsOpened, setKeepCardsOpened] = useState<boolean>(true);
+
+    const setDifficulty = (difficulty: number, keepCardsOpened: boolean = true) => {
+        setKeepCardsOpened(keepCardsOpened);
+        _setDifficulty(difficulty);
+    };
 
     return (
         <MainView>
             <StatusBar style='auto'/>
             {
                 difficulty
-                ? <Game difficulty={difficulty} setDifficulty={setDifficulty}/>
+                ? <Game difficulty={difficulty} setDifficulty={setDifficulty} keepCardsOpened={keepCardsOpened}/>
                 : <>
                     <Button title={'Легко'} onPress={() => setDifficulty(difficultyCeilsMap.easy)} />
                     <Button title={'Сложно'} onPress={() => setDifficulty(difficultyCeilsMap.hard)} />
+                    <Button title={'Кошмар'} onPress={() => setDifficulty(difficultyCeilsMap.hard, false)} />
                 </>
             }
         </MainView>
         );
 }
 
-export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<any>}> = ({difficulty, setDifficulty}) => {
+export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<any>, keepCardsOpened?: boolean}> = ({difficulty, setDifficulty, keepCardsOpened = true}) => {
     const [labelText, setLabelText] = useState('');
     const [currentCard, setCurrentCard] = useState(EMPTY);
     const [showAllCards, setShowAllCards] = useState(true);
@@ -50,7 +57,7 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
         const { sound } = await Audio.Sound.createAsync(soundSource);
         await sound.setVolumeAsync(volume);
         if (loop) {
-            sound.setIsLoopingAsync(true)
+            await sound.setIsLoopingAsync(true)
         }
         setSoundState(sound);
         await sound.playAsync();
@@ -59,7 +66,7 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
     // Start play the main theme
     useEffect(
         () => {
-            playSound(sounds.MAIN, 0.2, true, setMainSound);
+            playSound(sounds.MAIN, 0.1, true, setMainSound);
         },
         []
     )
@@ -116,7 +123,9 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
     };
 
     const resetCardsProgress = () => {
-        guessedCeils.current = {};
+        if (!keepCardsOpened) {
+            guessedCeils.current = {};
+        }
         clearCurrentCardPointers();
     };
 
