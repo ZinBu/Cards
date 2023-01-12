@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     info: {
         maxHeight: '20%',
         flex: 1,
+        alignContent: 'flex-end',
         alignItems: 'center',
         justifyContent: 'space-evenly',
         flexWrap: 'wrap',
@@ -69,6 +70,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     text: {
+//        marginTop: 20,
         color: 'white',
         fontSize: 18,
         fontFamily: 'Monospace',

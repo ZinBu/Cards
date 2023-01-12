@@ -183,7 +183,7 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
         <>
             <StatusBar style='auto'/>
             <InfoBlock labelText={labelText} />
-            { separateArrayOnParts(field, 2).map((val) =>  <Playground>{val}</Playground>) }
+            { separateArrayOnParts(field, 2).map((val, index) =>  <Playground key={index} >{val}</Playground>) }
             <Footer>
                 <Button title={'<-'} onPress={() => setDifficulty(null)} width={50}/>
                 <Button title={'↻'} onPress={restartGame} width={50}/>
