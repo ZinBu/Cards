@@ -1,7 +1,7 @@
 import React, {useRef, useState, useEffect, MutableRefObject} from 'react';
 import {StatusBar} from 'expo-status-bar';
 import {Audio, AVPlaybackSource} from 'expo-av';
-import {Character} from './interfaces';
+import {Character} from '../tools/interfaces';
 import Button from '../components/Button';
 import {MainView, InfoBlock, Playground, Footer} from '../components/Placements';
 import {fillPlayground, getRandomOnSuccaesSound} from '../tools/playground';
@@ -10,24 +10,24 @@ import {difficultyCeilsMap, cardsShowingTime, labelShowingTime, sounds} from '..
 const EMPTY = -1
 
 export const GameMenu = () => {
-    const [difficulty, setDifficulty] = useState(null);
+    const [difficulty, setDifficulty] = useState<number | null>(null);
 
     return (
         <MainView>
             <StatusBar style='auto'/>
             {
                 difficulty
-                ? <Game difficulty={difficulty} />
+                ? <Game difficulty={difficulty} setDifficulty={setDifficulty}/>
                 : <>
-                    <Button title={'Легко'} onPress={() => setDifficulty(difficultyCeilsMap.easy)}/ >
-                    <Button title={'Сложно'} onPress={() => setDifficulty(difficultyCeilsMap.hard)}/>
+                    <Button title={'Легко'} onPress={() => setDifficulty(difficultyCeilsMap.easy)} />
+                    <Button title={'Сложно'} onPress={() => setDifficulty(difficultyCeilsMap.hard)} />
                 </>
             }
         </MainView>
         );
 }
 
-export const Game: React.FC<{difficulty: number}> = ({difficulty}) => {
+export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<any>}> = ({difficulty, setDifficulty}) => {
     const [labelText, setLabelText] = useState('');
     const [currentCard, setCurrentCard] = useState(EMPTY);
     const [showAllCards, setShowAllCards] = useState(true);
@@ -185,7 +185,8 @@ export const Game: React.FC<{difficulty: number}> = ({difficulty}) => {
                 {createField()}
             </Playground>
             <Footer>
-                <Button title={'↻'} onPress={restartGame}/>
+                <Button title={'<-'} onPress={() => setDifficulty(null)} width={50}/>
+                <Button title={'↻'} onPress={restartGame} width={50}/>
             </Footer>
         </>
     );

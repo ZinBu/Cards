@@ -14,7 +14,7 @@ export const InfoBlock: React.FC<React.ComponentProps<any>> = props => (
 );
 
 export const Playground: React.FC<React.ComponentProps<any>> = props => (
-    <View style={styles.flexContainer}>
+    <View style={styles.playground}>
         {props.children}
     </View>
 );
@@ -32,20 +32,22 @@ const styles = StyleSheet.create({
         maxHeight: '100%',
         fontFamily: 'Monospace',
         backgroundColor: 'rgb(34,41,45)',
+        allignItems: 'center',
+        alignContent: 'center',
         flex: 1,
-        justifyContent: 'space-evenly',
+        justifyContent: 'center',
         flexWrap: 'wrap',
         flexDirection: 'column'
     },
     info: {
-        maxHeight: '10%',
+        maxHeight: '20%',
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-evenly',
         flexWrap: 'wrap',
         flexDirection: 'row'
     },
-    flexContainer: {
+    playground: {
         maxWidth: '100%',
         maxHeight: '100%',
         flex: 1,
