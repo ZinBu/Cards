@@ -1,13 +1,26 @@
-import {Image, ImageRequireSource, StyleSheet, TouchableHighlight} from 'react-native';
-import {images, sounds} from '../tools/constants';
+import React from 'react';
+import {Image, ImageRequireSource, StyleSheet, TouchableHighlight, Animated} from 'react-native';
+import {images, sounds, animationSpeed} from '../tools/constants';
 import {Character} from '../tools/interfaces';
 
 
 const CharacterImage: React.FC<{ source: ImageRequireSource, onPress: () => void, hide: boolean}> = ({source, onPress, hide}) => {
+    const fadeAnim = React.useRef(new Animated.Value(0)).current;
+
+    React.useEffect(() => {
+        Animated.timing(
+                fadeAnim,
+                {
+                    toValue: 1,
+                    duration: animationSpeed,
+                }
+                ).start();
+        }, [fadeAnim])
+
     return <TouchableHighlight
         onPress={onPress}
         >
-            {!hide ? <Image style={styles.char} source={source} /> : <Image style={styles.char} source={images.BOOMER} />}
+        {!hide ? <Animated.Image style={{...styles.char, opacity: fadeAnim}} source={source} /> : <Animated.Image style={styles.char} source={images.BOOMER} />}
         </TouchableHighlight>;
 };
 
