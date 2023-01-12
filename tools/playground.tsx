@@ -4,13 +4,20 @@ import {Character} from './interfaces';
 import {characters} from "../components/Images";
 import {sameCardCount} from "./constants";
 
+const range = (n: number) => Array.from(Array(n).keys());
+
 const shuffle = (array: any[]) => array.sort(() => Math.random() - 0.5);
 
 const getRandomElem = (array: any[]) => array[Math.floor(Math.random() * array.length)];
 
+export const separateArrayOnParts = (array: any[], parts: number = 3) => {
+    const sliceLength = Math.ceil(array.length / parts);
+    return range(parts).map((val) => array.slice(sliceLength * val, sliceLength * (val + 1)))
+};
+
 export const fillPlayground = (difficulty: number): { [key: number]: Character } => {
     const field: { [key: number]: Character } = {}
-    let shuffledCeils: number[] = shuffle(Array.from(Array(difficulty).keys()))
+    let shuffledCeils: number[] = shuffle(range(difficulty))
     shuffle(characters).forEach(
         (character) => {
             if (!shuffledCeils.length) {

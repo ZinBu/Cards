@@ -4,7 +4,7 @@ import {Audio, AVPlaybackSource} from 'expo-av';
 import {Character} from '../tools/interfaces';
 import Button from '../components/Button';
 import {MainView, InfoBlock, Playground, Footer} from '../components/Placements';
-import {fillPlayground, getRandomOnSuccaesSound} from '../tools/playground';
+import {fillPlayground, getRandomOnSuccaesSound, separateArrayOnParts} from '../tools/playground';
 import {difficultyCeilsMap, cardsShowingTime, labelShowingTime, sounds} from '../tools/constants';
 
 const EMPTY = -1
@@ -177,13 +177,13 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
         return charImages;
     };
 
+    const field = createField();
+
     return (
         <>
             <StatusBar style='auto'/>
             <InfoBlock labelText={labelText} />
-            <Playground>
-                {createField()}
-            </Playground>
+                { separateArrayOnParts(field, 2).map((val) =>  <Playground>{val}</Playground>) }
             <Footer>
                 <Button title={'<-'} onPress={() => setDifficulty(null)} width={50}/>
                 <Button title={'↻'} onPress={restartGame} width={50}/>
