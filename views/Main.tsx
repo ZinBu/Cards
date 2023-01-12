@@ -66,7 +66,7 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
     // Start play the main theme
     useEffect(
         () => {
-            playSound(sounds.MAIN, 0.1, true, setMainSound);
+            playSound(sounds.MAIN, 0.05, true, setMainSound);
         },
         []
     )
@@ -122,15 +122,15 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
         setCurrentCard(EMPTY);
     };
 
-    const resetCardsProgress = () => {
-        if (!keepCardsOpened) {
+    const resetCardsProgress = (forceRestart: boolean = false) => {
+        if (!keepCardsOpened || forceRestart) {
             guessedCeils.current = {};
         }
         clearCurrentCardPointers();
     };
 
     const restartGame = () => {
-        resetCardsProgress();
+        resetCardsProgress(true);
         playfield.current = fillPlayground(difficulty);
         setShowAllCards(true);
         setLabel('На тему сел?');
