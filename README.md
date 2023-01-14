@@ -10,3 +10,7 @@ Build .apk
     # eas build --platform android
     eas build -p android --profile preview
 
+Build web
+
+    npx expo export:web
+
