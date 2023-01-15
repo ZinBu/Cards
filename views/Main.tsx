@@ -4,8 +4,9 @@ import {Audio, AVPlaybackSource} from 'expo-av';
 import {Character} from '../tools/interfaces';
 import Button from '../components/Button';
 import {MainView, InfoBlock, Playground, Footer} from '../components/Placements';
-import {fillPlayground, getRandomOnSuccaesSound, separateArrayOnParts} from '../tools/playground';
+import {fillPlayground, getRandomOnSuccessSound} from '../tools/playground';
 import {difficultyCeilsMap, cardsShowingTime, labelShowingTime, sounds} from '../tools/constants';
+import { separateArrayOnParts } from '../tools/tools';
 
 const EMPTY = -1
 
@@ -66,7 +67,7 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
     // Start play the main theme
     useEffect(
         () => {
-            playSound(sounds.MAIN, 0.05, true, setMainSound);
+            playSound(sounds.MAIN, 0.8, true, setMainSound);
         },
         []
     )
@@ -143,7 +144,7 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
         // @ts-ignore
         guessedCeils.current[previousOpenedCard.current] = true;
         clearCurrentCardPointers();
-        playSound(getRandomOnSuccaesSound(char.onSuccessSounds));
+        playSound(getRandomOnSuccessSound(char.onSuccessSounds));
         setLabel('Ну ты коммерс!');
     };
 
@@ -194,8 +195,8 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
             <InfoBlock labelText={labelText} />
             { separateArrayOnParts(field, 2).map((val, index) =>  <Playground key={index} >{val}</Playground>) }
             <Footer>
-                <Button title={'<-'} onPress={() => setDifficulty(null)} width={50}/>
-                <Button title={'↻'} onPress={restartGame} width={50}/>
+                <Button title={'<-'} onPress={() => setDifficulty(null)} width={50} />
+                <Button title={'↻'} onPress={restartGame} width={50} disabled={showAllCards}/>
             </Footer>
         </>
     );
