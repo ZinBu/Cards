@@ -1,21 +1,13 @@
 import React from "react";
 import {AVPlaybackSource} from 'expo-av';
 import {Character} from './interfaces';
-import {characters} from "../components/Images";
+import {characters} from "../components/Characters";
 import {sameCardCount} from "./constants";
-
-const range = (n: number) => Array.from(Array(n).keys());
-
-const shuffle = (array: any[]) => array.sort(() => Math.random() - 0.5);
-
-export const separateArrayOnParts = (array: any[], parts: number = 3) => {
-    const sliceLength = Math.ceil(array.length / parts);
-    return range(parts).map((val) => array.slice(sliceLength * val, sliceLength * (val + 1)))
-};
+import {range, shuffle} from "./tools";
 
 export const fillPlayground = (difficulty: number): { [key: number]: Character } => {
-    const field: { [key: number]: Character } = {}
-    let shuffledCeils: number[] = shuffle(range(difficulty))
+    const field: { [key: number]: Character } = {};
+    let shuffledCeils: number[] = shuffle(range(difficulty));
     shuffle(characters).forEach(
         (character) => {
             if (!shuffledCeils.length) {
@@ -30,11 +22,4 @@ export const fillPlayground = (difficulty: number): { [key: number]: Character }
     return field
 };
 
-
 export const getRandomOnSuccessSound = (sounds: Generator<AVPlaybackSource>) => sounds.next().value;
-
-export function* cycle(...items: any[]) {
-    while(true) {
-        yield* items;
-    }
-}

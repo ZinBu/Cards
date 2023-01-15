@@ -4,7 +4,7 @@ import {TouchableOpacity, StyleSheet, Text} from 'react-native';
 type Props = {
     title: string,
     onPress: () => void,
-    disabled: boolean,
+    disabled?: boolean,
     width?: number
 };
 

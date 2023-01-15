@@ -4,8 +4,9 @@ import {Audio, AVPlaybackSource} from 'expo-av';
 import {Character} from '../tools/interfaces';
 import Button from '../components/Button';
 import {MainView, InfoBlock, Playground, Footer} from '../components/Placements';
-import {fillPlayground, getRandomOnSuccessSound, separateArrayOnParts} from '../tools/playground';
+import {fillPlayground, getRandomOnSuccessSound} from '../tools/playground';
 import {difficultyCeilsMap, cardsShowingTime, labelShowingTime, sounds} from '../tools/constants';
+import { separateArrayOnParts } from '../tools/tools';
 
 const EMPTY = -1
 
