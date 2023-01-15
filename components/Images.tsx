@@ -2,6 +2,7 @@ import React from 'react';
 import {ImageRequireSource, StyleSheet, TouchableHighlight, Animated} from 'react-native';
 import {images, sounds, animationSpeed} from '../tools/constants';
 import {Character} from '../tools/interfaces';
+import { cycle } from '../tools/playground';
 
 
 const CharacterImage: React.FC<{ source: ImageRequireSource, onPress: () => void, hide: boolean}> = ({source, onPress, hide}) => {
@@ -27,11 +28,11 @@ const CharacterImage: React.FC<{ source: ImageRequireSource, onPress: () => void
 
 const killa: Character = {
     name: 'killa',
-    onSuccessSounds: [
-            sounds.PODARKOV,
-            sounds.PODGON,
-            sounds.VLUDI,
-        ],
+    onSuccessSounds: cycle(...[
+        sounds.PODARKOV,
+        sounds.PODGON,
+        sounds.VLUDI,
+        ]),
     onFailSounds: [],
     // @ts-ignore
     getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={images.KILLA} key={key} onPress={onPress} hide={hide} />
@@ -39,11 +40,11 @@ const killa: Character = {
 
 const kot: Character = {
     name: 'kot',
-    onSuccessSounds: [
+    onSuccessSounds: cycle(...[
         sounds.KANITEL,
         sounds.ALE,
         sounds.BUHOI,
-    ],
+    ]),
     onFailSounds: [],
     // @ts-ignore
     getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={images.KOT} key={key} onPress={onPress} hide={hide} />
@@ -51,10 +52,10 @@ const kot: Character = {
 
 const oshparenni: Character = {
     name: 'oshparenni',
-    onSuccessSounds: [
+    onSuccessSounds: cycle(...[
         sounds.TERPILA,
         sounds.MERC,
-    ],
+    ]),
     onFailSounds: [],
     // @ts-ignore
     getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={images.OSHPARENNI} key={key} onPress={onPress} hide={hide} />
@@ -62,10 +63,10 @@ const oshparenni: Character = {
 
 const rama: Character = {
     name: 'rama',
-    onSuccessSounds: [
+    onSuccessSounds: cycle(...[
         sounds.NEMI,
         sounds.MOLOKA,
-    ],
+    ]),
     onFailSounds: [],
     // @ts-ignore
     getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={images.RAMA} key={key} onPress={onPress} hide={hide} />
@@ -73,10 +74,10 @@ const rama: Character = {
 
 const sobachiha: Character = {
     name: 'sobachiha',
-    onSuccessSounds: [
+    onSuccessSounds: cycle(...[
         sounds.POUBIVAUT,
         sounds.KATAFALKA,
-    ],
+    ]),
     onFailSounds: [],
     // @ts-ignore
     getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={images.SOBACHIHA} key={key} onPress={onPress} hide={hide} />
@@ -85,10 +86,10 @@ const sobachiha: Character = {
 
 const eralash: Character = {
     name: 'eralash',
-    onSuccessSounds: [
+    onSuccessSounds: cycle(...[
         sounds.SMOTRI,
         sounds.MICHISH,
-    ],
+    ]),
     onFailSounds: [],
     // @ts-ignore
     getImageComponent: (key: number, onPress: Function, hide: boolean) => <CharacterImage source={images.ERALASH} key={key} onPress={onPress} hide={hide} />

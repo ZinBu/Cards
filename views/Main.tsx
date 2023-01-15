@@ -4,7 +4,7 @@ import {Audio, AVPlaybackSource} from 'expo-av';
 import {Character} from '../tools/interfaces';
 import Button from '../components/Button';
 import {MainView, InfoBlock, Playground, Footer} from '../components/Placements';
-import {fillPlayground, getRandomOnSuccaesSound, separateArrayOnParts} from '../tools/playground';
+import {fillPlayground, getRandomOnSuccessSound, separateArrayOnParts} from '../tools/playground';
 import {difficultyCeilsMap, cardsShowingTime, labelShowingTime, sounds} from '../tools/constants';
 
 const EMPTY = -1
@@ -143,7 +143,7 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
         // @ts-ignore
         guessedCeils.current[previousOpenedCard.current] = true;
         clearCurrentCardPointers();
-        playSound(getRandomOnSuccaesSound(char.onSuccessSounds));
+        playSound(getRandomOnSuccessSound(char.onSuccessSounds));
         setLabel('Ну ты коммерс!');
     };
 
