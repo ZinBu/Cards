@@ -66,7 +66,7 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
     // Start play the main theme
     useEffect(
         () => {
-            playSound(sounds.MAIN, 0.05, true, setMainSound);
+            playSound(sounds.MAIN, 0.8, true, setMainSound);
         },
         []
     )
@@ -194,8 +194,8 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
             <InfoBlock labelText={labelText} />
             { separateArrayOnParts(field, 2).map((val, index) =>  <Playground key={index} >{val}</Playground>) }
             <Footer>
-                <Button title={'<-'} onPress={() => setDifficulty(null)} width={50}/>
-                <Button title={'↻'} onPress={restartGame} width={50}/>
+                <Button title={'<-'} onPress={() => setDifficulty(null)} width={50} />
+                <Button title={'↻'} onPress={restartGame} width={50} disabled={showAllCards}/>
             </Footer>
         </>
     );
