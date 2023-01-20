@@ -38,4 +38,7 @@ export const sounds = {
     POUBIVAUT: require('../assets/sounds/poubivajut-vas.mp3'),
     KATAFALKA: require('../assets/sounds/katafalka.mp3'),
     VLUDI: require('../assets/sounds/v-ludi.mp3'),
+    NATEME: require('../assets/sounds/na-teme.mp3'),
+    SUHAR: require('../assets/sounds/suhar.mp3'),
+    ZAMERC: require('../assets/sounds/za-merc.mp3'),
 };

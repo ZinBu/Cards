@@ -9,9 +9,10 @@ const charactersData = [
         name: 'killa',
         image: images.KILLA,
         onSuccessSounds: [
+            sounds.VLUDI,
+            sounds.ZAMERC,
             sounds.PODARKOV,
             sounds.PODGON,
-            sounds.VLUDI,
             ],
     },
     {
@@ -21,6 +22,8 @@ const charactersData = [
             sounds.KANITEL,
             sounds.ALE,
             sounds.BUHOI,
+            sounds.SUHAR,
+            sounds.NATEME,
         ],
     },
     {
@@ -37,7 +40,7 @@ const charactersData = [
         onSuccessSounds: [
             sounds.NEMI,
             sounds.MOLOKA,
-            ],
+        ],
     },
     {
         name: 'eralash',
@@ -45,7 +48,7 @@ const charactersData = [
         onSuccessSounds: [
             sounds.SMOTRI,
             sounds.MICHISH,
-            ],
+        ],
     },
     {
         name: 'sobachiha',
