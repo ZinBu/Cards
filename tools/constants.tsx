@@ -9,7 +9,9 @@ export const cardsShowingTime = 2500;
 
 export const labelShowingTime = 1500;
 
-export const animationSpeed = 500;
+export const animationSpeed = 125;
+
+export const fadeInSpeed = 500;
 
 export const images = {
     KILLA: require(`../assets/images/killa.png`),
