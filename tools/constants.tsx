@@ -7,6 +7,8 @@ export const sameCardCount = 2;
 
 export const cardsShowingTime = 2500;
 
+export const wonScreenShowingTime = 3000;
+
 export const labelShowingTime = 1500;
 
 export const animationSpeed = 125;

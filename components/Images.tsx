@@ -57,6 +57,8 @@ export const CharacterImage: React.FC<{ source: ImageRequireSource, onPress: () 
         >
             {
                 !hide
+                // TODO Shaking on fail
+                // TODO Blow of rotating bimers
                 ? <Animated.Image style={{...styles.char, opacity: fadeAnim, transform: [{scaleX: scaleIn()}] }} source={source} />
                 : <Animated.Image style={{...styles.char, opacity: fadeAnim, transform: [{scaleX: scaleOut()}] }} source={images.BOOMER} />}
         </TouchableHighlight>;
