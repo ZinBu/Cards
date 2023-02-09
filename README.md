@@ -13,4 +13,6 @@ Build .apk
 Build web
 
     npx expo export:web
-
+    cd web-build
+    vercel
+    
