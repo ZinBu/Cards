@@ -1,26 +1,66 @@
 import React from 'react';
-import {Animated, ImageRequireSource, StyleSheet, TouchableHighlight} from 'react-native';
-import {animationSpeed, images} from '../tools/constants';
+import {Animated, Easing, ImageRequireSource, StyleSheet, TouchableHighlight} from 'react-native';
+import {animationSpeed, fadeInSpeed, images} from '../tools/constants';
 
 
 export const CharacterImage: React.FC<{ source: ImageRequireSource, onPress: () => void, hide: boolean}> = ({source, onPress, hide}) => {
     const fadeAnim = React.useRef(new Animated.Value(0)).current;
+    const scaleX = React.useRef(new Animated.Value(0)).current;
+
+    const fadeIn = () => {
+        Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: fadeInSpeed,
+            useNativeDriver: true,
+        }).start();
+    };
+
+    const scaleIn = () => {
+        Animated.timing(
+            scaleX,
+            {
+                toValue: 1,
+                duration: animationSpeed,
+                easing: Easing.linear,
+                useNativeDriver: true
+            }
+        ).start();
+        return scaleX.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 1]
+        });
+    };
+
+    const scaleOut = () => {
+        Animated.timing(
+            scaleX,
+            {
+                toValue: 0,
+                duration: animationSpeed,
+                easing: Easing.linear,
+                useNativeDriver: true
+            }
+        ).start();
+        return scaleX.interpolate({
+            inputRange: [0, 1],
+            outputRange: [1, 0]
+        })
+    };
+
 
     React.useEffect(() => {
-        Animated.timing(
-                fadeAnim,
-                {
-                    toValue: 1,
-                    duration: animationSpeed,
-                    useNativeDriver: true
-                }
-                ).start();
-        }, [fadeAnim])
+        fadeIn();
+    }, [true])
 
     return <TouchableHighlight
         onPress={onPress}
         >
-            {!hide ? <Animated.Image style={{...styles.char, opacity: fadeAnim}} source={source} /> : <Animated.Image style={styles.char} source={images.BOOMER} />}
+            {
+                !hide
+                // TODO Shaking on fail
+                // TODO Blow of rotating bimers
+                ? <Animated.Image style={{...styles.char, opacity: fadeAnim, transform: [{scaleX: scaleIn()}] }} source={source} />
+                : <Animated.Image style={{...styles.char, opacity: fadeAnim, transform: [{scaleX: scaleOut()}] }} source={images.BOOMER} />}
         </TouchableHighlight>;
 };
 

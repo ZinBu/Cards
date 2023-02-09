@@ -3,10 +3,11 @@ import {StatusBar} from 'expo-status-bar';
 import {Audio, AVPlaybackSource} from 'expo-av';
 import {Character} from '../tools/interfaces';
 import Button from '../components/Button';
-import {MainView, InfoBlock, Playground, Footer} from '../components/Placements';
+import {MainView, InfoBlock, Playground, Footer, WonScreen, ClockBlock} from '../components/Placements';
 import {fillPlayground, getRandomOnSuccessSound} from '../tools/playground';
 import {difficultyCeilsMap, cardsShowingTime, labelShowingTime, sounds} from '../tools/constants';
 import { separateArrayOnParts } from '../tools/tools';
+import Clock from '../components/Clock';
 
 const EMPTY = -1
 
@@ -39,6 +40,7 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
     const [labelText, setLabelText] = useState('');
     const [currentCard, setCurrentCard] = useState(EMPTY);
     const [showAllCards, setShowAllCards] = useState(true);
+    const [clock, setClock] = useState<number | null>(null);
     const [sound, setSound] = useState<Audio.Sound>();
     const [mainSound, setMainSound] = useState<Audio.Sound>();
     const [greatingsSound, setGreatingsSound] = useState<Audio.Sound>();
@@ -48,6 +50,8 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
     // Needs to keep cards opened
     const guessedCeils = useRef({});
     const previousOpenedCard = useRef(EMPTY);
+
+    const isAllGuessed = () => Object.keys(guessedCeils.current).length === Object.keys(playfield.current).length;
 
     const playSound = async (
             soundSource: AVPlaybackSource,
@@ -193,7 +197,10 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
         <>
             <StatusBar style='auto'/>
             <InfoBlock labelText={labelText} />
+            {/* <ClockBlock clockCounter={clock} /> */}
+            { (showAllCards || isAllGuessed()) ? null : <Clock updateClock={setClock} />}
             { separateArrayOnParts(field, 2).map((val, index) =>  <Playground key={index} >{val}</Playground>) }
+            <WonScreen show={isAllGuessed()} />
             <Footer>
                 <Button title={'<-'} onPress={() => setDifficulty(null)} width={50} />
                 <Button title={'↻'} onPress={restartGame} width={50} disabled={showAllCards}/>

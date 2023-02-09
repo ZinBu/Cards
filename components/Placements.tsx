@@ -1,5 +1,7 @@
 import React from "react";
 import {StyleSheet, View, Text} from "react-native";
+import ConfettiCannon from 'react-native-confetti-cannon';
+import { wonScreenShowingTime } from "../tools/constants";
 
 export const MainView: React.FC<React.ComponentProps<any>> = props => (
     <View style={styles.container}>
@@ -10,6 +12,12 @@ export const MainView: React.FC<React.ComponentProps<any>> = props => (
 export const InfoBlock: React.FC<React.ComponentProps<any>> = props => (
     <View style={styles.info}>
         <Text style={styles.text}>{props.labelText}</Text>
+    </View>
+);
+
+export const ClockBlock: React.FC<React.ComponentProps<any>> = props => (
+    <View style={styles.clock}>
+        <Text style={styles.text}>{props.clockCounter}</Text>
     </View>
 );
 
@@ -25,6 +33,20 @@ export const Footer: React.FC<React.ComponentProps<any>> = props => (
     </View>
 );
 
+const Confetti: React.FC<React.ComponentProps<any>> = () =>  {
+    const [showConfetti, setShowConfetti] = React.useState(true);
+
+    React.useEffect(
+        () => {
+            setTimeout(() => setShowConfetti(false), wonScreenShowingTime)
+        },
+        [true]
+    );
+    
+    return showConfetti ? <ConfettiCannon count={85} origin={{x: -10, y: 0}} fadeOut /> : null;
+};
+
+export const WonScreen: React.FC<{show: boolean}> = ({show}) =>  show ? <Confetti /> : null;
 
 const styles = StyleSheet.create({
     container: {
@@ -37,13 +59,23 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         flexWrap: 'wrap',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        overflow: 'hidden'
     },
     info: {
         maxHeight: '20%',
         flex: 1,
         alignContent: 'flex-end',
         alignItems: 'center',
+        justifyContent: 'space-evenly',
+        flexWrap: 'wrap',
+        flexDirection: 'row'
+    },
+    clock: {
+        maxHeight: 15,
+        flex: 1,
+        alignContent: 'flex-end',
+        alignItems: 'flex-end',
         justifyContent: 'space-evenly',
         flexWrap: 'wrap',
         flexDirection: 'row'

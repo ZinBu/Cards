@@ -7,9 +7,13 @@ export const sameCardCount = 2;
 
 export const cardsShowingTime = 2500;
 
+export const wonScreenShowingTime = 3000;
+
 export const labelShowingTime = 1500;
 
-export const animationSpeed = 500;
+export const animationSpeed = 125;
+
+export const fadeInSpeed = 500;
 
 export const images = {
     KILLA: require(`../assets/images/killa.png`),
@@ -38,4 +42,7 @@ export const sounds = {
     POUBIVAUT: require('../assets/sounds/poubivajut-vas.mp3'),
     KATAFALKA: require('../assets/sounds/katafalka.mp3'),
     VLUDI: require('../assets/sounds/v-ludi.mp3'),
+    NATEME: require('../assets/sounds/na-teme.mp3'),
+    SUHAR: require('../assets/sounds/suhar.mp3'),
+    ZAMERC: require('../assets/sounds/za-merc.mp3'),
 };
