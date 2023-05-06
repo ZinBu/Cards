@@ -32,6 +32,7 @@ const charactersData = [
         onSuccessSounds: [
             sounds.TERPILA,
             sounds.MERC,
+            sounds.BESPREDEL,
         ],
     },
     {
@@ -48,6 +49,9 @@ const charactersData = [
         onSuccessSounds: [
             sounds.SMOTRI,
             sounds.MICHISH,
+            sounds.GORODISH,
+            sounds.OBOSNUEM,
+            sounds.PROBLEM,
         ],
     },
     {
@@ -56,6 +60,15 @@ const charactersData = [
         onSuccessSounds: [
             sounds.POUBIVAUT,
             sounds.KATAFALKA,
+        ],
+    },
+    {
+        name: 'tractorman',
+        image: images.TRACTORMAN,
+        onSuccessSounds: [
+            sounds.TR_PONYNA,
+            sounds.TR_NAZR1,
+            sounds.TR_NAZR2,
         ],
     },
 ];

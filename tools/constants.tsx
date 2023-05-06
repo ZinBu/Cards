@@ -40,6 +40,7 @@ export const images = {
     RAMA: require(`../assets/images/rama.png`),
     SOBACHIHA: require(`../assets/images/sobachiha.png`),
     ERALASH: require(`../assets/images/eralash.png`),
+    TRACTORMAN: require(`../assets/images/tractorman.png`),
     BOOMER: require(`../assets/images/boomer.jpg`),
 };
 
@@ -51,7 +52,11 @@ export const sounds = {
     SMOTRI: require('../assets/sounds/terpila_priehal.mp3'),
     PODARKOV: require('../assets/sounds/podarkov.mp3'),
     TERPILA: require('../assets/sounds/kto-terpila.mp3'),
+    BESPREDEL: require('../assets/sounds/gde-pezpredel.mp3'),
     MICHISH: require('../assets/sounds/michish.mp3'),
+    GORODISH: require('../assets/sounds/gorodish.mp3'),
+    OBOSNUEM: require('../assets/sounds/obosnuem.mp3'),
+    PROBLEM: require('../assets/sounds/komu-problem.mp3'),
     NEMI: require('../assets/sounds/ne-my-takie.mp3'),
     PODGON: require('../assets/sounds/podgon.mp3'),
     KANITEL: require('../assets/sounds/ne-zdorovay-kanitel.mp3'),
@@ -63,4 +68,10 @@ export const sounds = {
     NATEME: require('../assets/sounds/na-teme.mp3'),
     SUHAR: require('../assets/sounds/suhar.mp3'),
     ZAMERC: require('../assets/sounds/za-merc.mp3'),
+    TR_PONYNA: require('../assets/sounds/ponyna.mp3'),
+    TR_NAZR1: require('../assets/sounds/nazhraca.mp3'),
+    TR_NAZR2: require('../assets/sounds/mogu_nazhraca.mp3'),
+    // unused
+    V_STOILO: require('../assets/sounds/v-stoilo.mp3'),
+    DO_VIESNENIA: require('../assets/sounds/zabrali-do-viesnenia.mp3'),
 };
