@@ -2,6 +2,11 @@ export const difficultyCeilsMap = {
     easy: 6,
     hard: 12
 };
+export const difficultyNames = {
+    easy: 'Легко',
+    hard: 'Сложно',
+    nightmare: 'Кошмар'
+};
 
 export const sameCardCount = 2;
 
@@ -14,6 +19,13 @@ export const labelShowingTime = 1500;
 export const animationSpeed = 125;
 
 export const fadeInSpeed = 500;
+
+export const phrases = {
+    restart: 'На тему сел?',
+    rightChocie: 'Ну ты коммерс!',
+    arrowLeft: '<-',
+    arrowCycle: '↻'
+};
 
 export const images = {
     KILLA: require(`../assets/images/killa.png`),
