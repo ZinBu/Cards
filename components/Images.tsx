@@ -1,6 +1,6 @@
 import React from 'react';
 import {Animated, Easing, ImageRequireSource, StyleSheet, TouchableHighlight} from 'react-native';
-import {animationSpeed, fadeInSpeed, images} from '../tools/constants';
+import {animationSpeed, cardColor, fadeInSpeed, images} from '../tools/constants';
 
 
 export const CharacterImage: React.FC<{ source: ImageRequireSource, onPress: () => void, hide: boolean}> = ({source, onPress, hide}) => {
@@ -73,6 +73,6 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         borderStyle: 'solid',
         border: 3,
-        backgroundColor: '#3e8d6c82',
+        backgroundColor: cardColor,
     }
 });

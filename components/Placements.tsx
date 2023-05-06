@@ -1,7 +1,7 @@
 import React from "react";
 import {StyleSheet, View, Text} from "react-native";
 import ConfettiCannon from 'react-native-confetti-cannon';
-import { wonScreenShowingTime } from "../tools/constants";
+import { mainActivityBackground, wonScreenShowingTime } from "../tools/constants";
 
 export const MainView: React.FC<React.ComponentProps<any>> = props => (
     <View style={styles.container}>
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         width: '100%',
         maxHeight: '100%',
         fontFamily: 'Monospace',
-        backgroundColor: 'rgb(34,41,45)',
+        backgroundColor: mainActivityBackground,
         allignItems: 'center',
         alignContent: 'center',
         flex: 1,

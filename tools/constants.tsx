@@ -1,3 +1,9 @@
+export const mainActivityBackground = 'rgb(34, 41, 45)';
+
+export const cardColor = '#3e8d6c82';
+
+export const buttonColor = 'rgb(46,116,76)';
+
 export const difficultyCeilsMap = {
     easy: 6,
     hard: 12
