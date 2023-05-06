@@ -1,7 +1,7 @@
-import {Character} from '../tools/interfaces';
-import {cycle, shuffle} from '../tools/tools';
-import {images, sounds} from '../tools/constants';
-import {CharacterImage} from './Images'
+import { Character } from '../tools/interfaces';
+import { cycle, shuffle } from '../tools/tools';
+import { images, sounds } from '../tools/constants';
+import { CharacterImage } from './Images'
 
 
 const charactersData = [
@@ -13,7 +13,7 @@ const charactersData = [
             sounds.ZAMERC,
             sounds.PODARKOV,
             sounds.PODGON,
-            ],
+        ],
     },
     {
         name: 'kot',
@@ -32,6 +32,7 @@ const charactersData = [
         onSuccessSounds: [
             sounds.TERPILA,
             sounds.MERC,
+            sounds.BESPREDEL,
         ],
     },
     {
@@ -48,6 +49,9 @@ const charactersData = [
         onSuccessSounds: [
             sounds.SMOTRI,
             sounds.MICHISH,
+            sounds.GORODISH,
+            sounds.OBOSNUEM,
+            sounds.PROBLEM,
         ],
     },
     {
@@ -58,16 +62,25 @@ const charactersData = [
             sounds.KATAFALKA,
         ],
     },
+    {
+        name: 'tractorman',
+        image: images.TRACTORMAN,
+        onSuccessSounds: [
+            sounds.TR_PONYNA,
+            sounds.TR_NAZR1,
+            sounds.TR_NAZR2,
+        ],
+    },
 ];
 
 // @ts-ignore
 export const characters: Character[] = charactersData.map(
-        (char) => {
-            return {
-                name: char.name,
-                // Randomize an order of phrases for every new play
-                onSuccessSounds: cycle(...shuffle(char.onSuccessSounds)),
-                getImageComponent: (key: number, onPress: () => void, hide: boolean) => <CharacterImage source={char.image} key={key} onPress={onPress} hide={hide} />
-            }
+    (char) => {
+        return {
+            name: char.name,
+            // Randomize an order of phrases for every new play
+            onSuccessSounds: cycle(...shuffle(char.onSuccessSounds)),
+            getImageComponent: (key: number, onPress: () => void, hide: boolean) => <CharacterImage source={char.image} key={key} onPress={onPress} hide={hide} />
         }
+    }
 );

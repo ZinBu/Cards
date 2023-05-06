@@ -1,5 +1,6 @@
 import React from "react";
 import {TouchableOpacity, StyleSheet, Text} from 'react-native';
+import { buttonColor } from "../tools/constants";
 
 type Props = {
     title: string,
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
         width: 150,
         margin: 5,
         elevation: 8,
-        backgroundColor: "rgb(46,116,76)",
+        backgroundColor: buttonColor,
         borderRadius: 8,
         paddingVertical: 10,
         paddingHorizontal: 12

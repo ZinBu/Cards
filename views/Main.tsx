@@ -1,13 +1,14 @@
-import React, {useRef, useState, useEffect, MutableRefObject} from 'react';
-import {StatusBar} from 'expo-status-bar';
-import {Audio, AVPlaybackSource} from 'expo-av';
-import {Character} from '../tools/interfaces';
+import React, { useRef, useState, useEffect, MutableRefObject } from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { Audio, AVPlaybackSource } from 'expo-av';
+import { Character } from '../tools/interfaces';
 import Button from '../components/Button';
-import {MainView, InfoBlock, Playground, Footer, WonScreen, ClockBlock} from '../components/Placements';
-import {fillPlayground, getRandomOnSuccessSound} from '../tools/playground';
-import {difficultyCeilsMap, cardsShowingTime, labelShowingTime, sounds} from '../tools/constants';
+import { MainView, InfoBlock, Playground, Footer, WonScreen } from '../components/Placements';
+import { fillPlayground, getRandomOnSuccessSound } from '../tools/playground';
+import { difficultyCeilsMap, cardsShowingTime, labelShowingTime, sounds, difficultyNames, phrases } from '../tools/constants';
 import { separateArrayOnParts } from '../tools/tools';
-import Clock from '../components/Clock';
+import { characters } from "../components/Characters";
+
 
 const EMPTY = -1
 
@@ -22,31 +23,41 @@ export const GameMenu = () => {
 
     return (
         <MainView>
-            <StatusBar style='auto'/>
+            <StatusBar style='auto' />
             {
                 difficulty
-                ? <Game difficulty={difficulty} setDifficulty={setDifficulty} keepCardsOpened={keepCardsOpened}/>
-                : <>
-                    <Button title={'Легко'} onPress={() => setDifficulty(difficultyCeilsMap.easy)} />
-                    <Button title={'Сложно'} onPress={() => setDifficulty(difficultyCeilsMap.hard)} />
-                    <Button title={'Кошмар'} onPress={() => setDifficulty(difficultyCeilsMap.hard, false)} />
-                </>
+                    ? <Game
+                        characters={characters}
+                        difficulty={difficulty}
+                        setDifficulty={setDifficulty}
+                        keepCardsOpened={keepCardsOpened}
+                    />
+                    : <>
+                        <Button title={difficultyNames.easy} onPress={() => setDifficulty(difficultyCeilsMap.easy)} />
+                        <Button title={difficultyNames.hard} onPress={() => setDifficulty(difficultyCeilsMap.hard)} />
+                        <Button title={difficultyNames.nightmare} onPress={() => setDifficulty(difficultyCeilsMap.hard, false)} />
+                    </>
             }
         </MainView>
-        );
+    );
 }
 
-export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<any>, keepCardsOpened?: boolean}> = ({difficulty, setDifficulty, keepCardsOpened = true}) => {
+export const Game: React.FC<{
+    difficulty: number,
+    setDifficulty: React.Dispatch<any>,
+    characters: Character[],
+    keepCardsOpened?: boolean
+}> = ({ difficulty, setDifficulty, characters, keepCardsOpened = true }) => {
     const [labelText, setLabelText] = useState('');
     const [currentCard, setCurrentCard] = useState(EMPTY);
     const [showAllCards, setShowAllCards] = useState(true);
-    const [clock, setClock] = useState<number | null>(null);
+    // const [clock, setClock] = useState<number | null>(null);
     const [sound, setSound] = useState<Audio.Sound>();
     const [mainSound, setMainSound] = useState<Audio.Sound>();
     const [greatingsSound, setGreatingsSound] = useState<Audio.Sound>();
 
     // Playground permanent state
-    const playfield: MutableRefObject<{ [key: number]: Character }> = useRef(fillPlayground(difficulty));
+    const playfield: MutableRefObject<{ [key: number]: Character }> = useRef(fillPlayground(characters, difficulty));
     // Needs to keep cards opened
     const guessedCeils = useRef({});
     const previousOpenedCard = useRef(EMPTY);
@@ -54,11 +65,11 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
     const isAllGuessed = () => Object.keys(guessedCeils.current).length === Object.keys(playfield.current).length;
 
     const playSound = async (
-            soundSource: AVPlaybackSource,
-            volume: number = 1.0,
-            loop: boolean = false,
-            setSoundState: React.Dispatch<any> = setSound
-            ) => {
+        soundSource: AVPlaybackSource,
+        volume: number = 1.0,
+        loop: boolean = false,
+        setSoundState: React.Dispatch<any> = setSound
+    ) => {
         const { sound } = await Audio.Sound.createAsync(soundSource);
         await sound.setVolumeAsync(volume);
         if (loop) {
@@ -84,31 +95,31 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
     // Prevent memory leak
     useEffect(() => {
         return sound
-              ? () => {
-                  sound.unloadAsync();
-                }
-              : undefined;
-            },
-            [sound]
+            ? () => {
+                sound.unloadAsync();
+            }
+            : undefined;
+    },
+        [sound]
     );
     useEffect(() => {
         return mainSound
-              ? () => {
-            mainSound.unloadAsync();
-        }
-              : undefined;
-        },
-          [mainSound]
-      );
+            ? () => {
+                mainSound.unloadAsync();
+            }
+            : undefined;
+    },
+        [mainSound]
+    );
     useEffect(() => {
         return greatingsSound
-              ? () => {
-            greatingsSound.unloadAsync();
-        }
-              : undefined;
-        },
-          [greatingsSound]
-      );
+            ? () => {
+                greatingsSound.unloadAsync();
+            }
+            : undefined;
+    },
+        [greatingsSound]
+    );
 
     useEffect(
         () => {
@@ -136,9 +147,9 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
 
     const restartGame = () => {
         resetCardsProgress(true);
-        playfield.current = fillPlayground(difficulty);
+        playfield.current = fillPlayground(characters, difficulty);
         setShowAllCards(true);
-        setLabel('На тему сел?');
+        setLabel(phrases.restart);
     };
 
     const acceptRightChoose = (ceil: number) => {
@@ -149,7 +160,7 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
         guessedCeils.current[previousOpenedCard.current] = true;
         clearCurrentCardPointers();
         playSound(getRandomOnSuccessSound(char.onSuccessSounds));
-        setLabel('Ну ты коммерс!');
+        setLabel(phrases.rightChocie);
     };
 
     const acceptWrongChoose = () => {
@@ -195,15 +206,15 @@ export const Game: React.FC<{difficulty: number, setDifficulty: React.Dispatch<a
 
     return (
         <>
-            <StatusBar style='auto'/>
+            <StatusBar style='auto' />
             <InfoBlock labelText={labelText} />
             {/* <ClockBlock clockCounter={clock} /> */}
-            { (showAllCards || isAllGuessed()) ? null : <Clock updateClock={setClock} />}
-            { separateArrayOnParts(field, 2).map((val, index) =>  <Playground key={index} >{val}</Playground>) }
+            {/* { (showAllCards || isAllGuessed()) ? null : <Clock updateClock={setClock} />} */}
+            {separateArrayOnParts(field, 2).map((val, index) => <Playground key={index} >{val}</Playground>)}
             <WonScreen show={isAllGuessed()} />
             <Footer>
-                <Button title={'<-'} onPress={() => setDifficulty(null)} width={50} />
-                <Button title={'↻'} onPress={restartGame} width={50} disabled={showAllCards}/>
+                <Button title={phrases.arrowLeft} onPress={() => setDifficulty(null)} width={50} />
+                <Button title={phrases.arrowCycle} onPress={restartGame} width={50} disabled={showAllCards} />
             </Footer>
         </>
     );

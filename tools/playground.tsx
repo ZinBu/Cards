@@ -1,11 +1,10 @@
 import React from "react";
-import {AVPlaybackSource} from 'expo-av';
-import {Character} from './interfaces';
-import {characters} from "../components/Characters";
-import {sameCardCount} from "./constants";
-import {range, shuffle} from "./tools";
+import { AVPlaybackSource } from 'expo-av';
+import { Character } from './interfaces';
+import { sameCardCount } from "./constants";
+import { range, shuffle } from "./tools";
 
-export const fillPlayground = (difficulty: number): { [key: number]: Character } => {
+export const fillPlayground = (characters: Character[], difficulty: number): { [key: number]: Character } => {
     const field: { [key: number]: Character } = {};
     let shuffledCeils: number[] = shuffle(range(difficulty));
     shuffle(characters).forEach(
