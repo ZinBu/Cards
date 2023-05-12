@@ -21,4 +21,4 @@ export const fillPlayground = (characters: Character[], difficulty: number): { [
     return field
 };
 
-export const getRandomOnSuccessSound = (sounds: Generator<AVPlaybackSource>) => sounds.next().value;
+export const getRandomSound = (sounds: Generator<AVPlaybackSource>) => sounds.next().value;

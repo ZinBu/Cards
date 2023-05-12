@@ -4,10 +4,10 @@ import { Audio, AVPlaybackSource } from 'expo-av';
 import { Character } from '../tools/interfaces';
 import Button from '../components/Button';
 import { MainView, InfoBlock, Playground, Footer, WonScreen } from '../components/Placements';
-import { fillPlayground, getRandomOnSuccessSound } from '../tools/playground';
+import { fillPlayground, getRandomSound } from '../tools/playground';
 import { difficultyCeilsMap, cardsShowingTime, labelShowingTime, sounds, difficultyNames, phrases } from '../tools/constants';
 import { separateArrayOnParts } from '../tools/tools';
-import { characters } from "../components/Characters";
+import { characters, greetingSound } from "../components/Characters";
 
 
 const EMPTY = -1
@@ -88,7 +88,7 @@ export const Game: React.FC<{
     )
     useEffect(
         () => {
-            playSound(sounds.ZAPRAVKA, 0.5, false, setGreatingsSound);
+            playSound(getRandomSound(greetingSound), 0.5, false, setGreatingsSound);
         },
         []
     )
@@ -159,7 +159,7 @@ export const Game: React.FC<{
         // @ts-ignore
         guessedCeils.current[previousOpenedCard.current] = true;
         clearCurrentCardPointers();
-        playSound(getRandomOnSuccessSound(char.onSuccessSounds));
+        playSound(getRandomSound(char.onSuccessSounds));
         setLabel(phrases.rightChocie);
     };
 

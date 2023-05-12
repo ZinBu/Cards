@@ -1,3 +1,4 @@
+import { AVPlaybackSource } from "expo-av/build/AV.types";
 import { Character } from '../tools/interfaces';
 import { cycle, shuffle } from '../tools/tools';
 import { images, sounds } from '../tools/constants';
@@ -84,3 +85,6 @@ export const characters: Character[] = charactersData.map(
         }
     }
 );
+
+
+export const greetingSound: Generator<AVPlaybackSource> = cycle(...shuffle([sounds.V_STOILO, sounds.ZAPRAVKA, sounds.DO_VIESNENIA]));

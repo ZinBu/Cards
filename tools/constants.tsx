@@ -71,7 +71,6 @@ export const sounds = {
     TR_PONYNA: require('../assets/sounds/ponyna.mp3'),
     TR_NAZR1: require('../assets/sounds/nazhraca.mp3'),
     TR_NAZR2: require('../assets/sounds/mogu_nazhraca.mp3'),
-    // unused
     V_STOILO: require('../assets/sounds/v-stoilo.mp3'),
     DO_VIESNENIA: require('../assets/sounds/zabrali-do-viesnenia.mp3'),
 };
