@@ -1,11 +1,13 @@
 import React from 'react';
 import {Animated, Easing, ImageRequireSource, StyleSheet, TouchableHighlight} from 'react-native';
-import {animationSpeed, cardColor, fadeInSpeed, images} from '../tools/constants';
+import {animationSpeed, fadeInSpeed} from '../tools/constants';
+import { GameSettingsContext } from "../tools/context";
 
 
-export const CharacterImage: React.FC<{ source: ImageRequireSource, onPress: () => void, hide: boolean}> = ({source, onPress, hide}) => {
+export const CharacterImage: React.FC<{ source: ImageRequireSource, onPress: () => void, hide: boolean, cardBack: ImageRequireSource}> = ({source, onPress, hide, cardBack}) => {
     const fadeAnim = React.useRef(new Animated.Value(0)).current;
     const scaleX = React.useRef(new Animated.Value(0)).current;
+    const settings = React.useContext(GameSettingsContext);
 
     const fadeIn = () => {
         Animated.timing(fadeAnim, {
@@ -52,6 +54,8 @@ export const CharacterImage: React.FC<{ source: ImageRequireSource, onPress: () 
         fadeIn();
     }, [true])
 
+    const imageBaseStyle = {...styles.char, opacity: fadeAnim, backgroundColor: settings.cardsSettings.cardColor};
+
     return <TouchableHighlight
         onPress={onPress}
         >
@@ -59,8 +63,8 @@ export const CharacterImage: React.FC<{ source: ImageRequireSource, onPress: () 
                 !hide
                 // TODO Shaking on fail
                 // TODO Blow of rotating bimers
-                ? <Animated.Image style={{...styles.char, opacity: fadeAnim, transform: [{scaleX: scaleIn()}] }} source={source} />
-                : <Animated.Image style={{...styles.char, opacity: fadeAnim, transform: [{scaleX: scaleOut()}] }} source={images.BOOMER} />}
+                ? <Animated.Image style={{...imageBaseStyle, transform: [{scaleX: scaleIn()}] }} source={source} />
+                : <Animated.Image style={{...imageBaseStyle, transform: [{scaleX: scaleOut()}] }} source={cardBack} />}
         </TouchableHighlight>;
 };
 
@@ -73,6 +77,5 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         borderStyle: 'solid',
         border: 3,
-        backgroundColor: cardColor,
     }
 });

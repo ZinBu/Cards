@@ -1,5 +1,5 @@
-import { GameMenu } from "./views/Main";
+import { GameLauncher } from "./views/Main";
 
-const App = () => <GameMenu />;
+const App = () => <GameLauncher />;
 
 export default App;

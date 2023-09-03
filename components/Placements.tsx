@@ -1,13 +1,18 @@
 import React from "react";
 import {StyleSheet, View, Text} from "react-native";
 import ConfettiCannon from 'react-native-confetti-cannon';
-import { mainActivityBackground, wonScreenShowingTime } from "../tools/constants";
+import { wonScreenShowingTime } from "../tools/constants";
+import { GameSettingsContext } from "../tools/context";
 
-export const MainView: React.FC<React.ComponentProps<any>> = props => (
-    <View style={styles.container}>
-        {props.children}
-    </View>
-);
+export const MainView: React.FC<React.ComponentProps<any>> = props => {
+    const settings = React.useContext(GameSettingsContext);
+
+    return (
+        <View style={ {...styles.container, backgroundColor: settings.cardsSettings.mainActivityBackground} }>
+            {props.children}
+        </View>
+        )
+};
 
 export const InfoBlock: React.FC<React.ComponentProps<any>> = props => (
     <View style={styles.info}>
@@ -53,7 +58,6 @@ const styles = StyleSheet.create({
         width: '100%',
         maxHeight: '100%',
         fontFamily: 'Monospace',
-        backgroundColor: mainActivityBackground,
         allignItems: 'center',
         alignContent: 'center',
         flex: 1,
