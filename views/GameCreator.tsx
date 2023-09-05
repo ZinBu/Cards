@@ -19,7 +19,7 @@ export const GameCreator: React.FC<{ gameSettings: userInputSettings }> = (
     settings.musicSettings.greetingSoundList
   );
 
-  // To avaoid unintentional re-rendering
+  // To avoid unintentional re-rendering
   const gameSettings = useRef<GameSettings>({
     ...settings,
     greetingSoundGen: greetingSoundsGenerator,
