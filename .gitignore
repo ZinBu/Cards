@@ -12,6 +12,8 @@ web-build/
 .fleet
 .idea
 .expo*
+.yarnrc
+.npmrc
 
 # macOS
 .DS_Store
