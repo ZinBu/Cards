@@ -2,6 +2,10 @@
 
 The mobile game with soul of 90s (16+)
 
+Run:
+
+    sh setup.sh
+
 
 Build .apk
 

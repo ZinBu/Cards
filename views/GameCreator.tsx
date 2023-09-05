@@ -8,8 +8,6 @@ import {
   createCharacters,
   createGreetingSound,
 } from "../components/Characters";
-import { charactersData } from "../content/characters";
-import { cardsSettings } from "../content/common";
 import { GameMenu } from "./GameMenu";
 import { GameSettingsContext } from "../tools/context";
 
@@ -28,8 +26,8 @@ export const GameCreator: React.FC<{ gameSettings: userInputSettings }> = (
   });
 
   const characters: Character[] = createCharacters(
-    charactersData,
-    cardsSettings,
+    settings.characters,
+    settings.cardsSettings,
   );
 
   return (
