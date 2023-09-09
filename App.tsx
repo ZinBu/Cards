@@ -1,4 +1,4 @@
-import { GameCreator } from "./views/Main";
+import { GameCreator } from "./src/views/Main";
 
 const App = () => <GameCreator />;
 

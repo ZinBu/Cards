@@ -2,7 +2,7 @@ import {
     CardsSettings,
     MusicSettings,
     PhrasesAndSymbols,
-} from "../tools/interfaces";
+} from "@zinbu/cards-game-launcher";
 import { images, sounds } from "./preloads";
 
 export const phrasesAndSymbols: PhrasesAndSymbols = {
